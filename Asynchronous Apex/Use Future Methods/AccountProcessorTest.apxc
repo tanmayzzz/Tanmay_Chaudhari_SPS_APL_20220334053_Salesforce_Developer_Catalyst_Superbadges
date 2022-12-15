@@ -1,0 +1,37 @@
+@isTest
+private class AccountProcessorTest {
+    
+    @isTest
+    private static void testcountContacts(){
+        //Creating an account and inserting it
+        Account newAccount = new Account(Name = 'Test Account');
+        insert newAccount;
+
+        //Creating some contacts related to the account and inserting them
+        Contact newContact1 = new Contact(FirstName = 'John', LastName = 'Doe', AccountId = newAccount.Id);
+        insert newContact1;
+        
+        Contact newContact2 = new Contact(FirstName = 'Jan', LastName = 'Doe', AccountId = newAccount.Id);
+        insert newContact2;
+        
+        //Creating a List with account Ids to pass them throught the AccountProcessor.countContacts method
+        List<Id> accountIds = new List<Id>();
+        accountIds.add(newAccount.id);
+
+        //Starting Test:
+        Test.startTest();
+
+        //Calling the AccountProcessor.countContacts method
+        AccountProcessor.countContacts(accountIds);
+
+        //Finishing Test:
+        Test.stopTest();
+        //Account ACC = [SELECT Number_of_Contacts__c FROM Account WHERE id = :account.Id LIMIT 1];
+        
+        //Setting Assert (We have to parse the account.Number_of_Contacts__c 
+        //to integer to avoid some comparasion error between decimal and integer)
+        //System.assertEquals( Integer.valueOf(ACC.Number_of_Contacts__c) , 4);
+    }
+
+
+}

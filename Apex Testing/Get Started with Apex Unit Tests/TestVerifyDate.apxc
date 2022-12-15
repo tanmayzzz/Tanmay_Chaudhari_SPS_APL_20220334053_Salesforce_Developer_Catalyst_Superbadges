@@ -1,0 +1,41 @@
+@isTest
+private class TestVerifyDate
+    {
+      @isTest static void testCheckDatesOne ()
+      {
+        Date test = VerifyDate.CheckDates (Date.newInstance(2018, 7, 19), Date.newInstance(2018, 7, 20));
+        System.assertEquals(Date.newInstance(2018, 7, 20), test);
+      }
+
+    @isTest static void testCheckDatesTwo ()
+    {
+        Date test = VerifyDate.CheckDates (Date.newInstance(2018, 7, 19), Date.newInstance(2018, 8, 20));
+        System.assertEquals(Date.newInstance(2018, 8, 20), test);
+
+    }
+
+    @isTest static void testDateWithin30DaysOne ()
+    {
+        boolean test = VerifyDate.DateWithin30Days (Date.newInstance(2018, 7, 19), Date.newInstance(2018, 7, 18));
+        System.assertEquals(false, test);
+    }
+
+    @isTest static void testDateWithin30DaysTwo ()
+    {
+        boolean test = VerifyDate.DateWithin30Days (Date.newInstance(2018, 7, 19), Date.newInstance(2019, 1, 1));
+        System.assertEquals(false, test);
+    }
+
+    @isTest static void testDateWithin30DaysThree ()
+    {
+        boolean test = VerifyDate.DateWithin30Days (Date.newInstance(2018, 7, 19), Date.newInstance(2018, 7, 19));
+        System.assertEquals(true, test);
+    }
+
+    @isTest static void testSetEndOfMonthDate ()
+    {
+        Date test = VerifyDate.SetEndOfMonthDate (Date.newInstance(2018, 7, 19));
+        System.assertEquals(Date.newInstance(2018, 7, 31), test);
+    }
+
+}

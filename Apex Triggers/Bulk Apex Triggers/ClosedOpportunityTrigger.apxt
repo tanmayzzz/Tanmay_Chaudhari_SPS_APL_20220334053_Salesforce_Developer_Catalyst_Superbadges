@@ -1,0 +1,16 @@
+trigger ClosedOpportunityTrigger on Opportunity (after insert, after update) {
+    List<Task> newtsk = new List<Task>();
+    if(trigger.IsAfter && (trigger.IsInsert || trigger.IsUpdate)){
+    for(Opportunity op:Trigger.New){
+        if(op.StageName == 'Closed Won'){
+            Task tsk = new Task();
+        	tsk.Subject = 'Follow Up Test Task';
+        	tsk.WhatId = op.id;
+        	newtsk.add(tsk);
+        	}
+    	}
+    }
+    if(newtsk.size()>0){
+        insert newtsk;
+    }
+}

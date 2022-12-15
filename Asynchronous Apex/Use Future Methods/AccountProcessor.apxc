@@ -1,0 +1,23 @@
+public class AccountProcessor {
+    
+    //Writting the countContacts method and marking it whit the @future label.
+    @future
+    public static void countContacts(List<Id> accountIDs) {
+        
+        // Creating a list that will contain all those accounts that are referenced through the accounIDs list.
+        List<Account> accountsToUpdate = new List<Account>();
+        List<Account> accounts = [Select Id, Name, (Select Id from Contacts) from Account where Id in :accountIds];
+     
+        //Assigment from the total contact number to the Number_of_Contacts__c field for each account at accounts list.
+        for( Account acc:accounts ) {
+            List<Contact> contactList = acc.Contacts;
+          	acc.Number_of_Contacts__c = contactList.size();
+            accountsToUpdate.add(acc);
+        }
+
+        //Updating all accounts in list
+        update accountsToUpdate;
+
+    }
+
+}
